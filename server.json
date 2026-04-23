@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.chris-eaccountability/elephant-accountability-mcp",
+  "description": "LLM SEO and Agent Discoverability services for B2B SaaS. Query service tiers + pricing, assess buyer fit (0-100), list covered surfaces (llms.txt, Schema.org, MCP, A2A, UCP), fetch client proof points with metrics, get weekly LLM visibility snapshots across 5 LLMs, and request audits routed to Stripe/Calendly.",
+  "title": "Elephant Accountability MCP",
+  "repository": {
+    "url": "https://github.com/Chris-Eaccountability/elephant-accountability-mcp",
+    "source": "github"
+  },
+  "websiteUrl": "https://eaccountability.org",
+  "version": "1.0.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://elephant-mcp.fly.dev/mcp"
+    }
+  ]
+}
