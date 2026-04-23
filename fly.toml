@@ -1,0 +1,40 @@
+# Elephant Accountability MCP Server — Fly.io config
+# Deploy:
+#   fly launch          (first time; creates the app + volume)
+#   fly deploy          (subsequent updates)
+
+app = "elephant-mcp"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PYTHONUNBUFFERED = "1"
+  PORT = "8080"
+  ELEPHANT_MCP_DATA_DIR = "/data"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  path = "/health"
+  protocol = "http"
+  timeout = "5s"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory = "256mb"
+
+[[mounts]]
+  source = "elephant_mcp_data"
+  destination = "/data"
