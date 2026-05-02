@@ -45,7 +45,7 @@ uvicorn app.server:app --reload --host 0.0.0.0 --port 8080
 # In another terminal, hit it
 curl http://localhost:8080/.well-known/mcp.json
 curl -X POST -H "Content-Type: application/json" \
-  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' \
+  -d '{"jsonrpc":"2.0", "id":1, "method":"tools/list"}' \
   http://localhost:8080/mcp
 ```
 
@@ -123,7 +123,7 @@ MIT. See [LICENSE](./LICENSE).
 
 ## Publisher
 
-**Elephant Accountability LLC** (DBA GroundSense Advisors)
+**Elephant Accountability LLC**
 Christopher Kenney, sole member / manager
 United States
 chris@eaccountability.org
