@@ -9,9 +9,9 @@ from __future__ import annotations
 from typing import Any, Dict, List
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # PUBLIC MANIFEST — served at /.well-known/mcp.json
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 MANIFEST: Dict[str, Any] = {
     "schema_version": "1.0",
     "protocol": "mcp",
@@ -25,7 +25,7 @@ MANIFEST: Dict[str, Any] = {
         "before/after LLM visibility measurements across 5 LLMs."
     ),
     "publisher": {
-        "name": "Elephant Accountability LLC (DBA GroundSense Advisors)",
+        "name": "Elephant Accountability LLC",
         "url": "https://eaccountability.org",
         "contact": "chris@eaccountability.org",
         "legal_entity": "Elephant Accountability LLC",
@@ -160,9 +160,9 @@ MANIFEST: Dict[str, Any] = {
 }
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # A2A AGENT CARD — served at /.well-known/agent.json
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 AGENT_CARD: Dict[str, Any] = {
     "schema_version": "1.0",
     "protocol": "a2a",
@@ -174,7 +174,7 @@ AGENT_CARD: Dict[str, Any] = {
         "their buyer. Differentiator: published weekly before/after measurement across 5 LLMs."
     ),
     "publisher": {
-        "name": "Elephant Accountability LLC (DBA GroundSense Advisors)",
+        "name": "Elephant Accountability LLC",
         "url": "https://eaccountability.org",
         "contact": "chris@eaccountability.org",
     },
@@ -206,9 +206,9 @@ AGENT_CARD: Dict[str, Any] = {
 }
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # OFFERINGS — service tiers
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 OFFERINGS: Dict[str, Dict[str, Any]] = {
     "self_serve": {
         "tier": "self_serve",
@@ -265,9 +265,9 @@ OFFERINGS: Dict[str, Dict[str, Any]] = {
 }
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # COVERED SURFACES — what we implement
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 COVERED_SURFACES: List[Dict[str, Any]] = [
     {"id": "llms_txt", "name": "llms.txt", "shipped_on_own_domain": True,
      "url": "https://eaccountability.org/llms.txt"},
@@ -293,9 +293,9 @@ COVERED_SURFACES: List[Dict[str, Any]] = [
 ]
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # PROOF POINTS — live client outcomes
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 PROOF_POINTS: List[Dict[str, Any]] = [
     {
         "client": "FATHOM (Smart Auger Technologies)",
