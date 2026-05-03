@@ -17,12 +17,11 @@ MANIFEST: Dict[str, Any] = {
     "protocol": "mcp",
     "protocol_version": "2024-11-05",
     "name": "elephant-accountability",
-    "display_name": "Elephant Accountability — LLM SEO for B2B SaaS",
+    "display_name": "Elephant Accountability",
     "description": (
-        "LLM SEO and Agent Discoverability services for B2B SaaS companies. "
-        "Query pricing, service tiers, covered surfaces (llms.txt, Schema.org, MCP, A2A, UCP), "
-        "client outcomes, fit assessment, and request an audit. Differentiator: published "
-        "before/after LLM visibility measurements across 5 LLMs."
+        "Certification bureau and data layer for agent-mediated B2B commerce. "
+        "Publishes the EVI v0.9 vendor visibility standard and the Trustmark Certified v0.9 "
+        "AI-agent score."
     ),
     "publisher": {
         "name": "Elephant Accountability LLC",
@@ -41,9 +40,9 @@ MANIFEST: Dict[str, Any] = {
         {
             "name": "get_offerings",
             "description": (
-                "Returns Elephant Accountability's service tiers, pricing, delivery SLAs, "
-                "and checkout / booking URLs. Optionally personalized to the asking buyer's "
-                "company size or urgency."
+                "Returns Elephant Accountability's audit and engagement tiers with delivery SLAs "
+                "and pointers to /get-started for canonical pricing. Optionally personalized to "
+                "the asking buyer's company size or urgency."
             ),
             "inputSchema": {
                 "type": "object",
@@ -64,9 +63,10 @@ MANIFEST: Dict[str, Any] = {
         {
             "name": "get_covered_surfaces",
             "description": (
-                "Returns the full list of agent-discoverable surfaces Elephant implements: "
+                "Returns the full list of agent-discoverable surfaces measured by EVI v0.9: "
                 "llms.txt, Schema.org Organization + Product blocks, MCP servers, A2A Agent "
-                "Cards, UCP merchant metadata, agent-directory registrations, and citation-seeding."
+                "Cards, .well-known/agent.json, UCP merchant metadata, structured pricing, "
+                "agent-directory registrations."
             ),
             "inputSchema": {
                 "type": "object",
@@ -133,8 +133,8 @@ MANIFEST: Dict[str, Any] = {
         {
             "name": "request_audit",
             "description": (
-                "Agent requests an LLM SEO audit on behalf of its buyer. Routes to the "
-                "right tier (self-serve vs. done-for-you vs. retainer) and returns "
+                "Agent requests an EVI v0.9 visibility audit on behalf of its buyer. Routes "
+                "to the right tier (self-serve vs. done-for-you vs. retainer) and returns "
                 "a confirmation with checkout or booking links."
             ),
             "inputSchema": {
@@ -167,16 +167,18 @@ AGENT_CARD: Dict[str, Any] = {
     "schema_version": "1.0",
     "protocol": "a2a",
     "name": "elephant-accountability",
-    "display_name": "Elephant Accountability — LLM SEO for B2B SaaS",
+    "display_name": "Elephant Accountability",
     "description": (
-        "LLM SEO and Agent Discoverability services. Agents querying this card can "
-        "discover pricing, service tiers, proof points, and request an audit on behalf of "
-        "their buyer. Differentiator: published weekly before/after measurement across 5 LLMs."
+        "Certification bureau and data layer for agent-mediated B2B commerce. "
+        "Publishes the EVI v0.9 vendor visibility standard and the Trustmark Certified v0.9 "
+        "AI-agent score."
     ),
     "publisher": {
         "name": "Elephant Accountability LLC",
         "url": "https://eaccountability.org",
         "contact": "chris@eaccountability.org",
+        "legal_entity": "Elephant Accountability LLC",
+        "jurisdiction": "United States",
     },
     "endpoints": {
         "mcp": "https://elephant-mcp.fly.dev/mcp",
@@ -195,8 +197,10 @@ AGENT_CARD: Dict[str, Any] = {
     ],
     "preferred_transport": "mcp",
     "tags": [
-        "llm-seo",
+        "certification-bureau",
         "agent-discoverability",
+        "evi",
+        "trustmark",
         "b2b-saas",
         "agent-commerce",
         "mcp",
@@ -212,14 +216,12 @@ AGENT_CARD: Dict[str, Any] = {
 OFFERINGS: Dict[str, Dict[str, Any]] = {
     "self_serve": {
         "tier": "self_serve",
-        "name": "Self-Serve LLM SEO Audit",
-        "price_usd": 2000,
-        "price_display": "$2,000 flat",
+        "name": "EVI Visibility Audit — Self-Serve",
         "delivery": "72 hours",
-        "checkout_url": "https://eaccountability.org/#pricing",
+        "checkout_url": "https://eaccountability.org/get-started",
         "payment_method": "Stripe instant checkout",
         "deliverables": [
-            "Full LLM discoverability audit across 5 LLMs",
+            "EVI v0.9 visibility audit across the 3 canonical axes (Coverage, Prominence, Consistency)",
             "Production-ready llms.txt",
             "Schema.org Organization + Product vendor block",
             "30-day before/after measurement",
@@ -228,11 +230,9 @@ OFFERINGS: Dict[str, Dict[str, Any]] = {
     },
     "done_for_you": {
         "tier": "done_for_you",
-        "name": "Done-For-You Implementation",
-        "price_usd": 15000,
-        "price_display": "$15,000",
+        "name": "EVI Visibility Audit — Done-For-You",
         "delivery": "14 days",
-        "checkout_url": "https://eaccountability.org/#pricing",
+        "checkout_url": "https://eaccountability.org/get-started",
         "payment_method": "Calendly discovery call, then Stripe or invoice",
         "deliverables": [
             "Self-serve audit, plus:",
@@ -242,13 +242,11 @@ OFFERINGS: Dict[str, Dict[str, Any]] = {
             "Registration in 5 public agent directories",
             "60-day before/after measurement across 5 LLMs",
         ],
-        "best_for": "Series A–B SaaS with a meaningful AI story to tell.",
+        "best_for": "Series A–B SaaS targeting Bronze/Silver Agent Commerce Cert tiers.",
     },
     "retainer": {
         "tier": "retainer",
-        "name": "Retainer",
-        "price_usd": 2000,
-        "price_display": "$2,000 / month",
+        "name": "Bureau Retainer",
         "delivery": "ongoing, month-to-month",
         "checkout_url": "mailto:chris@eaccountability.org",
         "payment_method": "Invoice, Net 15",
