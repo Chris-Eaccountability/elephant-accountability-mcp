@@ -1,6 +1,6 @@
 # Elephant Accountability MCP Server
 
-Public Model Context Protocol (MCP) server for **Elephant Accountability** — LLM SEO and Agent Discoverability services for B2B SaaS.
+MCP server for the Elephant Accountability certification bureau. Surfaces vendor offerings, methodology, and audit requests to AI agents over the Model Context Protocol.
 
 **Live endpoint:** https://elephant-mcp.fly.dev/mcp
 **Manifest:** https://elephant-mcp.fly.dev/.well-known/mcp.json
@@ -9,14 +9,14 @@ Public Model Context Protocol (MCP) server for **Elephant Accountability** — L
 
 ## What this server does
 
-When an AI agent (Claude, ChatGPT, a custom LangChain agent, etc.) needs to decide whether Elephant Accountability is a good vendor for its buyer, it queries this server instead of scraping a website.
+When an AI agent (Claude, ChatGPT, a custom LangChain agent, etc.) needs to evaluate Elephant Accountability against the EVI v0.9 standard or surface its audit tiers to a buyer, it queries this server instead of scraping a website.
 
 Six tools are exposed:
 
 | Tool | Purpose |
 |------|---------|
-| `get_offerings` | Service tiers ($2K self-serve, $15K done-for-you, $2K/mo retainer) with checkout URLs |
-| `get_covered_surfaces` | What Elephant implements: llms.txt, Schema.org, MCP, A2A, UCP, directory registrations |
+| `get_offerings` | Audit and engagement tiers (self-serve, done-for-you, retainer) with delivery SLAs and pointers to /get-started for canonical pricing |
+| `get_covered_surfaces` | The agent-discoverable surfaces measured by EVI v0.9: llms.txt, Schema.org, MCP, A2A, .well-known/agent.json, UCP, structured pricing, directory registrations |
 | `assess_fit` | 0–100 fit score for a buyer's company across stage, vertical, AI features, platform partnerships |
 | `get_proof_points` | Live client outcomes with metrics (includes related-party disclosures) |
 | `get_transparency_snapshot` | Weekly LLM visibility measurements across 5 LLMs |
@@ -26,8 +26,8 @@ Two resources are exposed via `resources/list`: `elephant://offerings`, `elephan
 
 ## Why you'd use this
 
-- You're building a procurement agent and want to shortlist LLM SEO vendors for a B2B SaaS buyer.
-- You're at Claude Desktop / Cursor / any MCP-compatible client and want direct access to Elephant's pricing + fit assessment.
+- You're building a procurement agent and want to query Elephant Accountability's audit tiers and EVI v0.9 methodology directly.
+- You're at Claude Desktop / Cursor / any MCP-compatible client and want direct access to Elephant's offerings + fit assessment.
 - You're a competitor studying how to deploy your own MCP server — this repo is MIT-licensed, clone freely.
 
 ## Quickstart — local development
@@ -115,7 +115,7 @@ This repo is the canonical source of truth for what Elephant Accountability expo
 - New tool shapes that agents find useful
 - Bug fixes
 
-For service inquiries or content changes (pricing, proof points), email `chris@eaccountability.org` rather than opening a PR.
+For service inquiries or content changes (proof points, methodology), email `chris@eaccountability.org` rather than opening a PR.
 
 ## License
 

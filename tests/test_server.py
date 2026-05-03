@@ -53,6 +53,15 @@ def test_manifest(app):
     }
 
 
+def test_manifest_no_dba(app):
+    """Brand-audit Fire 2: ensure no DBA reference leaks through MANIFEST."""
+    r = app.get("/.well-known/mcp.json")
+    body = json.dumps(r.json()).lower()
+    assert "groundsense" not in body
+    assert "dba" not in body
+    assert "llm seo" not in body
+
+
 def test_agent_card(app):
     r = app.get("/.well-known/agent.json")
     assert r.status_code == 200
@@ -61,6 +70,15 @@ def test_agent_card(app):
     assert card["protocol"] == "a2a"
     assert "mcp" in card["endpoints"]
     assert "repository" in card["endpoints"]
+
+
+def test_agent_card_no_dba(app):
+    """Brand-audit Fire 2: ensure no DBA reference leaks through AGENT_CARD."""
+    r = app.get("/.well-known/agent.json")
+    body = json.dumps(r.json()).lower()
+    assert "groundsense" not in body
+    assert "dba" not in body
+    assert "llm seo" not in body
 
 
 def test_llms_txt_redirects(app):
@@ -92,7 +110,9 @@ def test_mcp_get_offerings_all(app):
     })
     payload = json.loads(r.json()["result"]["content"][0]["text"])
     assert set(payload["offerings"].keys()) == {"self_serve", "done_for_you", "retainer"}
-    assert payload["offerings"]["self_serve"]["price_usd"] == 2000
+    # Offering names must be certification-bureau aligned (not "LLM SEO")
+    assert "LLM SEO" not in payload["offerings"]["self_serve"]["name"]
+    assert "EVI" in payload["offerings"]["self_serve"]["name"] or "Audit" in payload["offerings"]["self_serve"]["name"]
 
 
 def test_mcp_get_offerings_seed_recommends_self_serve(app):
