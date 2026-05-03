@@ -1,15 +1,15 @@
 """
 Elephant Accountability MCP Server
-===================================
+==================================
 
 Standalone FastAPI app. Serves:
 
-  - GET  /                          → service info
-  - GET  /health                    → liveness probe
-  - GET  /.well-known/mcp.json     → MCP manifest (for auto-discovery)
-  - GET  /.well-known/agent.json   → A2A Agent Card
-  - POST /mcp                       → JSON-RPC 2.0 endpoint for MCP clients
-  - GET  /llms.txt                  → redirects to canonical eaccountability.org/llms.txt
+  - GET  /                            → service info
+  - GET  /health                      → liveness probe
+  - GET  /.well-known/mcp.json        → MCP manifest (for auto-discovery)
+  - GET  /.well-known/agent.json      → A2A Agent Card
+  - POST /mcp                         → JSON-RPC 2.0 endpoint for MCP clients
+  - GET  /llms.txt                    → redirects to canonical eaccountability.org/llms.txt
 
 Deploy:
   fly deploy --app elephant-mcp
@@ -47,14 +47,15 @@ from app.content import (
 log = logging.getLogger("elephant_mcp")
 logging.basicConfig(level=logging.INFO, format="%(levelname)s:%(name)s:%(message)s")
 
-# ── App ──────────────────────────────────────────────────────────────────
+# ── App ───────────────────────────────────────────────────────────────────────
 app = FastAPI(
     title="Elephant Accountability MCP Server",
     version=__version__,
     description=(
-        "LLM SEO and Agent Discoverability services for B2B SaaS. "
+        "Certification bureau and data layer for agent-mediated B2B commerce. "
         "Publishes a Model Context Protocol (MCP) server that AI agents can query "
-        "on behalf of their buyers to discover pricing, assess fit, and request audits."
+        "on behalf of their buyers to discover EVI v0.9 audit tiers, assess fit, "
+        "and request audits."
     ),
 )
 
@@ -67,7 +68,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Storage ──────────────────────────────────────────────────────────────
+# ── Storage ──────────────────────────────────────────────────────────────────
 # Persists audit requests + reciprocal call tracking.
 # Fly volume is mounted at /data by default (fly.toml). Falls back to /tmp for local runs.
 DATA_DIR = Path(os.environ.get("ELEPHANT_MCP_DATA_DIR") or "/data")
@@ -120,9 +121,9 @@ async def _startup():
     log.info(f"Elephant MCP {__version__} starting. DB at {DB_PATH}")
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # ROUTES
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 @app.get("/")
 def root():
     return {
@@ -171,9 +172,9 @@ def llms_txt():
     return RedirectResponse(url="https://eaccountability.org/llms.txt", status_code=307)
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # MCP JSON-RPC ENDPOINT
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 class MCPRequest(BaseModel):
     jsonrpc: str = "2.0"
     id: Any = None
@@ -257,9 +258,9 @@ def _err(req_id: Any, code: int, message: str) -> JSONResponse:
     return JSONResponse({"jsonrpc": "2.0", "id": req_id, "error": {"code": code, "message": message}})
 
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 # TOOL HANDLERS
-# ═══════════════════════════════════════════════════════════════════════════
+# ═════════════════════════════════════════════════════════════════════════════
 def _handle_get_offerings(args: Dict[str, Any]) -> Dict[str, Any]:
     tier = args.get("tier")
     size = (args.get("company_size") or "").lower()
@@ -279,7 +280,8 @@ def _handle_get_offerings(args: Dict[str, Any]) -> Dict[str, Any]:
         "note": (
             "Self-serve is Stripe-instant, zero sales call. "
             "Done-for-you begins with a 20-minute Calendly discovery call. "
-            "Retainer is existing-clients-only and is added by email after a DFY engagement."
+            "Retainer is existing-clients-only and is added by email after a DFY engagement. "
+            "Canonical pricing on https://eaccountability.org/get-started."
         ),
     }
 
@@ -316,18 +318,18 @@ def _handle_assess_fit(args: Dict[str, Any]) -> Dict[str, Any]:
     if industry in ("aec", "healthtech", "legaltech", "fintech", "devtools"):
         score += 15
         reasons.append(
-            f"Vertical SaaS in {industry} is a strong fit — niche vocabulary makes LLM SEO high-leverage."
+            f"Vertical SaaS in {industry} is a strong fit — niche vocabulary makes EVI v0.9 visibility high-leverage."
         )
     elif industry == "general_b2b_saas":
         score += 5
 
     if ships_ai is True:
         score += 15
-        reasons.append("Ships AI features — strongest signal. Buyers expect you to be AI-discoverable.")
+        reasons.append("Ships AI features — strongest signal. Buyers expect you to be agent-discoverable.")
 
     if any(p in partnerships for p in ("salesforce", "esri", "autodesk", "procore", "hubspot", "aws")):
         score += 10
-        reasons.append("Platform partnership present — your integrations likely are not LLM-discoverable yet.")
+        reasons.append("Platform partnership present — your integrations likely are not agent-discoverable yet.")
 
     score = max(0, min(100, score))
 
@@ -337,14 +339,14 @@ def _handle_assess_fit(args: Dict[str, Any]) -> Dict[str, Any]:
         tier = "self_serve"
     else:
         tier = "self_serve"
-        reasons.append("Lower score → start with the $2K self-serve audit to validate before committing more.")
+        reasons.append("Lower score → start with the self-serve audit to validate before committing more.")
 
     return {
         "company_name": args.get("company_name"),
         "fit_score": score,
         "recommended_tier": tier,
         "reasoning": reasons,
-        "next_step_url": "https://eaccountability.org/#pricing",
+        "next_step_url": "https://eaccountability.org/get-started",
         "disclosure": "Scoring is heuristic. We do not guarantee LLM placement — nobody can honestly offer that.",
     }
 
@@ -381,13 +383,13 @@ def _handle_request_audit(args: Dict[str, Any]) -> Dict[str, Any]:
     if tier_interest == "self_serve" or urgency == "immediate":
         next_step = {
             "action": "stripe_checkout",
-            "url": "https://eaccountability.org/#pricing",
-            "description": "Self-serve tier — $2,000 via Stripe, 72-hour turnaround.",
+            "url": "https://eaccountability.org/get-started",
+            "description": "Self-serve tier — Stripe-instant checkout, 72-hour turnaround.",
         }
     elif tier_interest == "done_for_you":
         next_step = {
             "action": "discovery_call",
-            "url": "https://eaccountability.org/#pricing",
+            "url": "https://eaccountability.org/get-started",
             "description": "20-minute Calendly discovery call, then engagement kickoff.",
         }
     else:
