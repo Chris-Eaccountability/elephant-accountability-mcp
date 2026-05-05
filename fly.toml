@@ -1,40 +1,41 @@
-# Elephant Accountability MCP Server — Fly.io config
-# Deploy:
-#   fly launch          (first time; creates the app + volume)
-#   fly deploy          (subsequent updates)
+# fly.toml app configuration file generated for elephant-accountability-mcp on 2026-05-05T17:26:43Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-app = "elephant-mcp"
-primary_region = "iad"
+app = 'elephant-accountability-mcp'
+primary_region = 'ams'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
 
 [env]
-  PYTHONUNBUFFERED = "1"
-  PORT = "8080"
-  ELEPHANT_MCP_DATA_DIR = "/data"
+  ELEPHANT_MCP_DATA_DIR = '/data'
+  PORT = '8080'
+  PYTHONUNBUFFERED = '1'
+
+[[mounts]]
+  source = 'elephant_mcp_data'
+  destination = '/data'
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
+  processes = ['app']
 
-[[http_service.checks]]
-  grace_period = "10s"
-  interval = "30s"
-  method = "GET"
-  path = "/health"
-  protocol = "http"
-  timeout = "5s"
+  [[http_service.checks]]
+    interval = '30s'
+    timeout = '5s'
+    grace_period = '10s'
+    method = 'GET'
+    path = '/health'
+    protocol = 'http'
 
 [[vm]]
-  cpu_kind = "shared"
+  memory = '256mb'
+  cpu_kind = 'shared'
   cpus = 1
-  memory = "256mb"
-
-[[mounts]]
-  source = "elephant_mcp_data"
-  destination = "/data"
+  memory_mb = 256
