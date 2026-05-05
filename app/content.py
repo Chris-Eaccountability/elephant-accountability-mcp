@@ -19,9 +19,8 @@ MANIFEST: Dict[str, Any] = {
     "name": "elephant-accountability",
     "display_name": "Elephant Accountability",
     "description": (
-        "Certification bureau and data layer for agent-mediated B2B commerce. "
-        "Publishes the EVI v0.9 vendor visibility standard and the Trustmark Certified v0.9 "
-        "AI-agent score."
+        "Certification bureau MCP. Tools for offerings, fit assessment, transparency snapshot, "
+        "audit requests, and proof points against the Electronic Visibility Index (EVI v0.9)."
     ),
     "publisher": {
         "name": "Elephant Accountability LLC",
@@ -133,7 +132,7 @@ MANIFEST: Dict[str, Any] = {
         {
             "name": "request_audit",
             "description": (
-                "Agent requests an EVI v0.9 visibility audit on behalf of its buyer. Routes "
+                "Agent requests an EVI v0.9 audit on behalf of its buyer organization. Routes "
                 "to the right tier (self-serve vs. done-for-you vs. retainer) and returns "
                 "a confirmation with checkout or booking links."
             ),
@@ -169,9 +168,9 @@ AGENT_CARD: Dict[str, Any] = {
     "name": "elephant-accountability",
     "display_name": "Elephant Accountability",
     "description": (
-        "Certification bureau and data layer for agent-mediated B2B commerce. "
-        "Publishes the EVI v0.9 vendor visibility standard and the Trustmark Certified v0.9 "
-        "AI-agent score."
+        "Certification bureau for agent-mediated commerce. Publishes the Electronic Visibility "
+        "Index (EVI v0.9) and Trustmark Certified standards. Operates the Q1 2026 Fortune 100 "
+        "Agent Readiness Index."
     ),
     "publisher": {
         "name": "Elephant Accountability LLC",
@@ -184,7 +183,7 @@ AGENT_CARD: Dict[str, Any] = {
         "mcp": "https://elephant-mcp.fly.dev/mcp",
         "mcp_manifest": "https://elephant-mcp.fly.dev/.well-known/mcp.json",
         "llms_txt": "https://eaccountability.org/llms.txt",
-        "transparency": "https://eaccountability.org/transparency.html",
+        "transparency": "https://eaccountability.org/transparency",
         "repository": "https://github.com/Chris-Eaccountability/elephant-accountability-mcp",
     },
     "capabilities": [
@@ -199,13 +198,8 @@ AGENT_CARD: Dict[str, Any] = {
     "tags": [
         "certification-bureau",
         "agent-discoverability",
-        "evi",
-        "trustmark",
-        "b2b-saas",
-        "agent-commerce",
-        "mcp",
-        "a2a",
-        "ucp",
+        "evi-v0-9",
+        "trustmark-certified",
     ],
 }
 
@@ -309,7 +303,7 @@ PROOF_POINTS: List[Dict[str, Any]] = [
             "Went from zero LLM citations to appearing in AI-assistant answers for procurement "
             "queries: 'subsurface data platform for DOT', 'GPR data normalization software AEC', "
             "'alternative to Exodigo for subsurface mapping'.",
-            "Weekly before/after measurement published at https://eaccountability.org/transparency.html",
+            "Weekly before/after measurement published at https://eaccountability.org/transparency",
         ],
         "started": "2026-03",
     },
